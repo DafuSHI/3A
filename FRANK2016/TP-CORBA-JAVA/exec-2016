@@ -1,0 +1,20 @@
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ javac -d classes -classpath .:classes Serveur.java 
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ javac -d classes -classpath .:classes calculImpl.java 
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ javac -d classes -classpath .:classes Client.java 
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ java -cp ".:classes" tpcorba.exo1.Serveur
+Le serveur est pret 
+^Z
+[1]+  Arrêté                java -cp ".:classes" tpcorba.exo1.Serveur
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ bg
+[1]+ java -cp ".:classes" tpcorba.exo1.Serveur &
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ javac - -cp .:classes tpcorba.exo1.Client 100 
+javac: invalid flag: -
+Usage: javac <options> <source files>
+use -help for a list of possible options
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ java -cp .:classes tpcorba.exo1.Client 100 
+ Que faire (incrementer ou decrementer ; saisir i ou d)?  
+i
+Invocation de incrementer()
+ Valeur incrementee = 101
+kermarre@pc-df-797:~/FRANK2010/TP-CORBA-JAVA/EXO1$ 
+
