@@ -1,0 +1,14 @@
+SETUP JACORB
+SETUP JAVA17
+
+
+export JACORB_HOME=/usr/home/enstb1/JacORB
+
+export JAVA_CMD=java
+
+export PATH=$JACORB_HOME/bin:$JACORB_HOME/etc:$JACORB_HOME/lib:$JACORB_HOME/classes:$JACORB_HOME/src:$PATH
+
+export CLASSPATH=$JACORB_HOME/classes:$JACORB_HOME/lib:.:classes
+
+export LD_LIBRARY_PATH=$JACORB_HOME/libs
+
