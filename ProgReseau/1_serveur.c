@@ -107,8 +107,10 @@ int main(int argc, char **argv) {
 	close(ns);
 	break;
       }
-      buf[nread] = '\0';
+      buf[nread-1] = '\0';
       printf("Message recu '%s'\n", buf);
+      if(strcmp(buf,"z") == 0)
+        printf("Unfortunately the client is dead by ctrl + ? \n");
     }
   }
 }

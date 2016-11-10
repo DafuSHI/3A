@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <signal.h>
 
 #define BUFSIZE 512
 
@@ -19,6 +20,9 @@ int main(int argc, char **argv) {
     printf("Usage: %s nom_machine_distante port_serveur\n", argv[0]);
     exit(EXIT_FAILURE);
   }
+
+
+
 
   /*
    * Obtention de l'adresse IP du distant, a partir de son nom par
@@ -68,6 +72,15 @@ int main(int argc, char **argv) {
    * fonctions utilisees et d'emettre un message d'erreur avec perror(),
    * puis de sortir avec exit(). */
 
+  void sig_quit_hdl(){
+    nwrite = write(sfd, "z", strlen("z")+1);
+    if (nwrite < 0) {
+      perror("write");
+      exit(EXIT_FAILURE);
+  }
+}
+
+  signal(SIGQUIT,sig_quit_hdl);
   /* Boucle de communication */
   for (;;) {
     /* Lecture socket */
