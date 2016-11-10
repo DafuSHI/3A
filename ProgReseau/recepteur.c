@@ -17,6 +17,10 @@ int main(int argc, char **argv) {
   struct sockaddr_storage from;
   socklen_t fromlen;
   char host[NI_MAXHOST], service[NI_MAXSERV];
+  struct ip_mreq mreq;  
+
+
+
 
   if (argc != 2) {
     printf("Usage: %s port\n", argv[0]);
@@ -25,7 +29,7 @@ int main(int argc, char **argv) {
 
  /* Construction de l'adresse locale (pour bind) */
   memset(&hints, 0, sizeof(struct addrinfo));
-  hints.ai_family = AF_INET6;           /* Force IPv6 */
+  hints.ai_family = AF_INET4;           /* Force IPv6 */
   hints.ai_socktype = SOCK_DGRAM;       /* Datagram socket */
   hints.ai_flags = AI_PASSIVE;          /* Pour l'adresse IP joker */
   hints.ai_flags |= AI_V4MAPPED|AI_ALL; /* IPv4 remappe en IPv6 */
@@ -44,12 +48,13 @@ int main(int argc, char **argv) {
   for (rp = result; rp != NULL; rp = rp->ai_next) {
 
     /* Creation de la socket */
-    sfd = ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+    sfd = socket(rp->ai_family,rp->ai_socktype,rp->ai_protocol);
     if (sfd == -1)
       continue;
+    bzero(&mreq, sizeof(struct ip_mreq));
 
     /* Association d'un port a la socket */
-    r = ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+    r = bind(sfd,rp->ai_addr,rp->ai_addrlen);
     if (r == 0)
       break;            /* Succes */
     close(sfd);
@@ -72,7 +77,7 @@ int main(int argc, char **argv) {
   for (;;) {
     /* Reception donnees */
     fromlen = sizeof(from);
-    nrecv = ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+    nrecv = recvfrom(sfd,buf,BUFSIZE,0,(struct sockaddr*)&from, &fromlen);
     if (nrecv == -1) {
       perror("Erreur en lecture socket\n");
       exit(EXIT_FAILURE);

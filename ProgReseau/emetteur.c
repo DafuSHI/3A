@@ -9,7 +9,7 @@
 #define BUFSIZE 100000
 
 int main(int argc, char **argv) {
-  int sfd, s, val, volume;
+  int sfd, s, val, volume,rsz;
   struct addrinfo hints;
   struct addrinfo *result, *rp;
   struct sockaddr *sa;
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
    * cf. man getaddrinfo(3)
    */
   memset(&hints, 0, sizeof(struct addrinfo));
-  hints.ai_family = AF_UNSPEC;          /* IPv4 ou IPv6 */
+  hints.ai_family = AF_INET4;          /* IPv4 ou IPv6 */
   hints.ai_socktype = SOCK_DGRAM;       /* Datagram socket */
   hints.ai_flags = 0;
   hints.ai_protocol = 0;                /* Any protocol */
@@ -53,7 +53,8 @@ int main(int argc, char **argv) {
      On essaie chaque adresse jusqu'a ce que socket(2) reussisse. */
   for (rp = result; rp != NULL; rp = rp->ai_next) {
     /* Ouverture de la socket */
-    sfd = ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+    sfd = socket(rp->ai_family,rp->ai_socktype,rp->ai_protocol);
+
     if (sfd >= 0)
       break;
   }
@@ -62,7 +63,7 @@ int main(int argc, char **argv) {
     perror("socket");
     exit(EXIT_FAILURE);
   }
-
+  rsz = 65530;
   /*
    * Construction de la structure d'adresse du distant
    */
@@ -74,13 +75,18 @@ int main(int argc, char **argv) {
 
   /* Permettons le broadcast (IPv4 only) */
   val = 1;
+  
   if (setsockopt(sfd, SOL_SOCKET, SO_BROADCAST, &val, sizeof(val)) < 0) {
     perror("setsockopt");
     exit(EXIT_FAILURE);
   }
-
+  
+/*
+  if (setsockopt(sfd, SOL_SOCKET,  SO_SNDBUF, &rsz, sizeof(rsz)) == 0 )
+    printf("SO_RCVBUF apres forcage: %d octets\n", rsz);
+*/
   /* Envoi donnees */
-  nsend = ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+  nsend = sendto(sfd, buf, 65527, 0, (struct sockaddr *)rp->ai_addr, salen);
   if (nsend < 0)
     perror("sendto");
 
