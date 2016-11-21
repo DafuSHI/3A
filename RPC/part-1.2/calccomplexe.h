@@ -24,27 +24,27 @@ typedef struct complexe complexe;
 #define CALCVERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define ADD 1
-extern  int * add_1(complexe *, CLIENT *);
-extern  int * add_1_svc(complexe *, struct svc_req *);
-#define MUL 2
-extern  int * mul_1(complexe *, CLIENT *);
-extern  int * mul_1_svc(complexe *, struct svc_req *);
-#define INIT 3
-extern  void * init_1(complexe *, CLIENT *);
-extern  void * init_1_svc(complexe *, struct svc_req *);
+#define INIT 1
+extern  struct complexe * init_1(complexe *, CLIENT *);
+extern  struct complexe * init_1_svc(complexe *, struct svc_req *);
+#define ADD 2
+extern  struct complexe * add_1(complexe *, CLIENT *);
+extern  struct complexe * add_1_svc(complexe *, struct svc_req *);
+#define MUL 3
+extern  struct complexe * mul_1(complexe *, CLIENT *);
+extern  struct complexe * mul_1_svc(complexe *, struct svc_req *);
 extern int calccompprog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define ADD 1
-extern  int * add_1();
-extern  int * add_1_svc();
-#define MUL 2
-extern  int * mul_1();
-extern  int * mul_1_svc();
-#define INIT 3
-extern  void * init_1();
-extern  void * init_1_svc();
+#define INIT 1
+extern  struct complexe * init_1();
+extern  struct complexe * init_1_svc();
+#define ADD 2
+extern  struct complexe * add_1();
+extern  struct complexe * add_1_svc();
+#define MUL 3
+extern  struct complexe * mul_1();
+extern  struct complexe * mul_1_svc();
 extern int calccompprog_1_freeresult ();
 #endif /* K&R C */
 

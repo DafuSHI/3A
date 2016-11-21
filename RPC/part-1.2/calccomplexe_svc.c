@@ -20,9 +20,9 @@ static void
 calccompprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
+		complexe init_1_arg;
 		complexe add_1_arg;
 		complexe mul_1_arg;
-		complexe init_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -33,22 +33,22 @@ calccompprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
+	case INIT:
+		_xdr_argument = (xdrproc_t) xdr_complexe;
+		_xdr_result = (xdrproc_t) xdr_complexe;
+		local = (char *(*)(char *, struct svc_req *)) init_1_svc;
+		break;
+
 	case ADD:
 		_xdr_argument = (xdrproc_t) xdr_complexe;
-		_xdr_result = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_complexe;
 		local = (char *(*)(char *, struct svc_req *)) add_1_svc;
 		break;
 
 	case MUL:
 		_xdr_argument = (xdrproc_t) xdr_complexe;
-		_xdr_result = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_complexe;
 		local = (char *(*)(char *, struct svc_req *)) mul_1_svc;
-		break;
-
-	case INIT:
-		_xdr_argument = (xdrproc_t) xdr_complexe;
-		_xdr_result = (xdrproc_t) xdr_void;
-		local = (char *(*)(char *, struct svc_req *)) init_1_svc;
 		break;
 
 	default:

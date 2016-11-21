@@ -16,7 +16,7 @@ static struct complexe courante;
 int *
 add_1_svc(complexe *argp, struct svc_req *rqstp)
 {
-	static int  result;
+	static int result;
 	courante.pentiere += *argp.pentiere;
 	courante.pimaginaire += *argp.pimaginaire;
 	/*

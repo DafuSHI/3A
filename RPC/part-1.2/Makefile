@@ -6,9 +6,9 @@
 CLIENT = calccomplexe_client
 SERVER = calccomplexe_server
 
-SOURCES_CLNT.c = calccomplexe_clnt_main.c
+SOURCES_CLNT.c = client.c
 SOURCES_CLNT.h = 
-SOURCES_SVC.c = calccomplexe_svc_proc.c
+SOURCES_SVC.c = server.c
 SOURCES_SVC.h = 
 SOURCES.x = calccomplexe.x
 

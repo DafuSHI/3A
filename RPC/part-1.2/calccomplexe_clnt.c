@@ -9,47 +9,47 @@
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };
 
-int *
-add_1(complexe *argp, CLIENT *clnt)
-{
-	static int clnt_res;
-
-	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, ADD,
-		(xdrproc_t) xdr_complexe, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
-		TIMEOUT) != RPC_SUCCESS) {
-		return (NULL);
-	}
-	return (&clnt_res);
-}
-
-int *
-mul_1(complexe *argp, CLIENT *clnt)
-{
-	static int clnt_res;
-
-	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, MUL,
-		(xdrproc_t) xdr_complexe, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
-		TIMEOUT) != RPC_SUCCESS) {
-		return (NULL);
-	}
-	return (&clnt_res);
-}
-
-void *
+struct complexe *
 init_1(complexe *argp, CLIENT *clnt)
 {
-	static char clnt_res;
+	static struct complexe clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, INIT,
 		(xdrproc_t) xdr_complexe, (caddr_t) argp,
-		(xdrproc_t) xdr_void, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_complexe, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
-	return ((void *)&clnt_res);
+	return (&clnt_res);
+}
+
+struct complexe *
+add_1(complexe *argp, CLIENT *clnt)
+{
+	static struct complexe clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, ADD,
+		(xdrproc_t) xdr_complexe, (caddr_t) argp,
+		(xdrproc_t) xdr_complexe, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+struct complexe *
+mul_1(complexe *argp, CLIENT *clnt)
+{
+	static struct complexe clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, MUL,
+		(xdrproc_t) xdr_complexe, (caddr_t) argp,
+		(xdrproc_t) xdr_complexe, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
 }
